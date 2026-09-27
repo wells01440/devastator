@@ -1,77 +1,75 @@
 # Devastator
 
-**macOS only.** A native Mac port of Devastator, the Commodore 64 type-in
-game from [COMPUTE! magazine issue 51, August 1984](https://www.atarimagazines.com/compute/issue51/192_1_Devastator.php),
-built with [FutureBasic](https://www.brilorsoftware.com/fb/pages/home.html).
-The original needed a joystick; this port uses the keyboard. There is no
-Windows or Linux version.
+Save the Earth. You have ten seconds.
+
+![Platform](https://img.shields.io/badge/platform-macOS%2011%2B-black)
+![Architecture](https://img.shields.io/badge/arch-Apple%20Silicon-blue)
+![Release](https://img.shields.io/github/v/release/wells01440/devastator)
+![License](https://img.shields.io/badge/license-MIT-green)
+![Origin](https://img.shields.io/badge/COMPUTE!-August%201984-red)
+
+Native macOS port of **Devastator** by David R. Arnold, from
+[COMPUTE! issue 51](https://www.atarimagazines.com/compute/issue51/192_1_Devastator.php)
+(C64 machine language by Gregg Peele). Sprites and rules come straight from
+the original bytes. Keyboard controls replace the joystick. macOS only.
 
 ![Title screen](screenshots/title.png)
 
-![Gameplay: the gunsight tracks the saucer over the warp corridor](screenshots/gameplay.png)
+![Gameplay](screenshots/gameplay.png)
 
-## Install (prebuilt app)
+## Install
 
-1. Download `Devastator.app.zip` from this repository's Releases page and
-   unzip it.
-2. The app is unsigned. On first launch, right-click `Devastator.app`,
-   choose Open, then confirm. If macOS still refuses:
+1. Download `Devastator.app.zip` from [Releases](../../releases) and unzip.
+2. First launch: right-click the app, choose Open (it is unsigned). Or:
    `xattr -dc Devastator.app`
-3. Requires an Apple Silicon Mac running macOS 11 or later. Intel Macs:
-   build from source and set Build Settings > Architecture accordingly.
 
-## Build from source
+Intel Macs: build from source and set Build Settings > Architecture.
 
-1. Install [FutureBasic](https://www.brilorsoftware.com/fb/pages/home.html)
-   (freeware, macOS).
-2. Open `Devastator/Devastator.fbeproj` and press Cmd-R.
+## Build
+
+Open `Devastator/Devastator.fbeproj` in
+[FutureBasic](https://www.brilorsoftware.com/fb/pages/home.html) (free) and
+press Cmd-R.
 
 ## Play
 
-The Devastator saucer is attacking Earth. Land a hit at least every 10
-seconds or the Earth is destroyed. A hit scores 10 points. Ten hits destroy
-a saucer; each destroyed saucer changes direction faster. Destroy ten
-saucers to save the Earth.
-
-A shot only connects when the crosshair itself overlaps the saucer, not the
-outer box.
+The saucer's death ray fires every ten seconds. Each hit resets the clock
+and scores 10. Ten hits destroy a saucer. Ten saucers — score 1000 — saves
+the Earth. Only the crosshair kills; the box around it is glass.
 
 | Key | Action |
 |---|---|
-| 1 / 2 | select 1 or 2 player game (menu) |
-| Arrows | aim the gunsight |
+| 1 / 2 | 1 or 2 player game (menu) |
+| Arrows | aim |
 | Space | fire, one shot per press |
-| 1 / 2 / 3 | difficulty slow / medium / fast (in game) |
+| 1 / 2 / 3 | difficulty (in game) |
 | W A S D | player 2 flies the saucer |
-| F | player 2 jams the gunsight small |
-| Return | replay after a game ends |
-| Q | quit after a game ends |
-| Esc | back to the menu |
+| F | player 2 jams the gunsight |
+| Return | replay |
+| Q | quit |
+| Esc | menu |
+
+## Fidelity
+
+- Sprite data is byte-identical to the published listing.
+- Movement clamps, fire gate, hit pause, doom clock, waves, and scoring
+  follow the disassembly at $C000-$C6CB.
+- The original's glitched playfield fill is redrawn as the intended
+  symmetric corridor.
+- F1/F3/F5 difficulty keys become 1/2/3. SHIFT/LOCK crosshair sizing
+  becomes player 2's jam key.
+- Sound is synthesized to approximate the SID drone, shot, sweep, and
+  explosion.
 
 ## Credits
 
-- Original game: "Devastator" by David R. Arnold, COMPUTE! issue 51,
-  August 1984, page 58. Commodore 64 machine language portion by Gregg
-  Peele, COMPUTE! Publications.
-- Article text: [Classic Computer Magazine Archive](https://www.atarimagazines.com/compute/issue51/192_1_Devastator.php)
-- Scanned issue: [Internet Archive](https://archive.org/details/1984-08-compute-magazine)
-- FutureBasic compiler: [Brilor Software](https://www.brilorsoftware.com/fb/pages/home.html)
-- macOS FutureBasic port: Wells (wells01440) with Claude Code, 2026.
+- Original game: David R. Arnold, COMPUTE! issue 51, August 1984, p. 58.
+  C64 machine language: Gregg Peele, COMPUTE! Publications.
+- [Article text](https://www.atarimagazines.com/compute/issue51/192_1_Devastator.php)
+  | [Scanned issue](https://archive.org/details/1984-08-compute-magazine)
+  | [FutureBasic](https://www.brilorsoftware.com/fb/pages/home.html)
+- Port: Wells (wells01440) with Claude Code, 2026.
 
-Original game design and sprite data copyright 1984 COMPUTE! Publications,
-Inc. and the authors. The sprite bitmaps in GameData.incl are reproduced
-from the published listing. The port is a non-commercial preservation
-project. The port's source code is MIT licensed; see LICENSE.
-
-## Source fidelity
-
-Sprites (saucer, crosshair, box, three Earth frames) are byte-identical to
-the original machine language data. Movement clamps, speeds, the fire gate,
-the 20-frame hit pause, the 10-second doom clock, wave count, and scoring
-follow the disassembly at $C000-$C6CB and match the article's stated rules.
-The playfield fill in the original BASIC listing is glitched; this port
-draws the intended symmetric corridor. Difficulty selection moves from
-F1/F3/F5 to 1/2/3. The original toggled crosshair size with SHIFT/LOCK;
-the port instead gives the shrink to player 2 as a held jam key (F).
-Sound is synthesized to approximate the SID drone, shot, hit sweep, and
-explosion.
+Original design and sprite data copyright 1984 COMPUTE! Publications, Inc.
+and the authors. Non-commercial preservation project. Port code is MIT
+licensed; see LICENSE.
