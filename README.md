@@ -56,7 +56,7 @@ outer box.
 - Article text: [Classic Computer Magazine Archive](https://www.atarimagazines.com/compute/issue51/192_1_Devastator.php)
 - Scanned issue: [Internet Archive](https://archive.org/details/1984-08-compute-magazine)
 - FutureBasic compiler: [Brilor Software](https://www.brilorsoftware.com/fb/pages/home.html)
-- macOS FutureBasic port: Wells (wells01440), 2026, written with Claude.
+- macOS FutureBasic port: Wells (wells01440) with Claude Code, 2026.
 
 Original game design and sprite data copyright 1984 COMPUTE! Publications,
 Inc. and the authors. The sprite bitmaps in GameData.incl are reproduced
