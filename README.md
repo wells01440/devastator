@@ -6,6 +6,10 @@ built with [FutureBasic](https://www.brilorsoftware.com/fb/pages/home.html).
 The original needed a joystick; this port uses the keyboard. There is no
 Windows or Linux version.
 
+![Title screen](screenshots/title.png)
+
+![Gameplay: the gunsight tracks the saucer over the warp corridor](screenshots/gameplay.png)
+
 ## Install (prebuilt app)
 
 1. Download `Devastator.app.zip` from this repository's Releases page and
