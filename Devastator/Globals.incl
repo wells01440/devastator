@@ -16,6 +16,8 @@ dim as long gBoomTick, gEarthFrame
 dim as long gKLeft, gKRight, gKUp, gKDown
 dim as long gKA, gKD, gKW, gKS, gFireHeld, gJamHeld
 
+dim as TimerRef gTimer
+dim as long gClosing
 dim as SInt16 gSamp(45000)
 dim as UInt8 gHdr(43)
 dim as CFDataRef gSndSiren, gSndShot, gSndWhoop, gSndBoom

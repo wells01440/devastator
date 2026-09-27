@@ -9,7 +9,7 @@ void local fn DoAppEvent( ev as long )
       gEarthFrame = _frEarth1
       fn BuildMenu
       fn BuildWindow
-      timerbegin , 0.0167, YES
+      gTimer = timerbegin , 0.0167, YES
         fn GameTick
       timerend
     case _appShouldTerminateAfterLastWindowClosed
@@ -29,6 +29,12 @@ end fn
 
 void local fn DoDialog( ev as long, tag as long )
   select ( ev )
+    case _windowWillClose
+      if tag = _window
+        gClosing = 1
+        TimerInvalidate( gTimer )
+        sound stop 1
+      end if
     case _viewDrawRect
       if tag = _gameView then fn DrawGame
     case _viewAcceptsFirstResponder

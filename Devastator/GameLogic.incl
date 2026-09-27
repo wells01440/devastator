@@ -172,6 +172,7 @@ void local fn StepBoom
 end fn
 
 void local fn GameTick
+  if gClosing then exit fn
   gTick = gTick + 1
   if gState = _stPlay
     fn StepPlay
