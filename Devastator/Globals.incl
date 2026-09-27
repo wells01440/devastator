@@ -1,0 +1,21 @@
+// globals
+dim as long gGrid(24, 39)
+dim as long gColr(24, 39)
+dim as long gSpr(3, 20, 11)
+dim as long gCross(20, 23)
+dim as long gBox(20, 23)
+dim as long gFont(43, 6)
+dim as double gPalR(15), gPalG(15), gPalB(15)
+
+dim as long gState, gPlayers, gScore, gSpeed, gTick
+dim as long gSightX, gSightY, gSaucX, gSaucY
+dim as long gWave, gHP, gDoom, gGate, gArmed, gFlash, gExplode, gSightSmall
+dim as long gDirT, gAdx, gAdy
+dim as long gStrL1, gStrL2, gStrR1, gStrR2
+dim as long gBoomTick, gEarthFrame
+dim as long gKLeft, gKRight, gKUp, gKDown
+dim as long gKA, gKD, gKW, gKS, gFireHeld, gJamHeld
+
+dim as SInt16 gSamp(45000)
+dim as UInt8 gHdr(43)
+dim as CFDataRef gSndSiren, gSndShot, gSndWhoop, gSndBoom

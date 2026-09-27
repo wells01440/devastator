@@ -1,0 +1,6 @@
+void local fn BuildWindow
+  window _window, @"Devastator", (0, 0, _viewW, _viewH), NSWindowStyleMaskTitled + NSWindowStyleMaskClosable + NSWindowStyleMaskMiniaturizable
+  subclass view _gameView, (0, 0, _viewW, _viewH)
+  ViewSetAcceptsFirstResponder( _gameView, YES )
+  WindowMakeFirstResponder( _window, _gameView )
+end fn

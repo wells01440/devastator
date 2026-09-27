@@ -1,0 +1,46 @@
+void local fn DoAppEvent( ev as long )
+  select ( ev )
+    case _appWillFinishLaunching
+      fn SoundExists( NULL )// statement-only sound use skips module detection; this call links the Sound module
+      fn InitData
+      fn BuildSounds
+      fn BuildBackdrop
+      gSpeed = 2
+      gEarthFrame = _frEarth1
+      fn BuildMenu
+      fn BuildWindow
+      timerbegin , 0.0167, YES
+        fn GameTick
+      timerend
+    case _appShouldTerminateAfterLastWindowClosed
+      AppEventSetBool( YES )
+  end select
+end fn
+
+void local fn DoMenu( menuID as long, itemID as long )
+  select ( menuID )
+    case _mGame
+      if itemID = _iNewGame
+        gState = _stMenu
+        sound stop 1
+      end if
+  end select
+end fn
+
+void local fn DoDialog( ev as long, tag as long )
+  select ( ev )
+    case _viewDrawRect
+      if tag = _gameView then fn DrawGame
+    case _viewAcceptsFirstResponder
+      DialogEventSetBool( YES )
+    case _viewKeyDown, _windowKeyDown
+      fn KeyChange( 1 )
+      DialogEventSetBool( YES )
+    case _viewKeyUp, _windowKeyUp
+      fn KeyChange( 0 )
+  end select
+end fn
+
+on appevent fn DoAppEvent
+on menu fn DoMenu
+on dialog fn DoDialog

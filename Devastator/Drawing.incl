@@ -1,0 +1,189 @@
+// ---------- drawing ----------
+
+void local fn SetFill( ctx as CGContextRef, ci as long )
+  CGContextSetRGBFillColor( ctx, gPalR(ci), gPalG(ci), gPalB(ci), 1.0 )
+end fn
+
+void local fn FillTri( ctx as CGContextRef, x1 as double, y1 as double, x2 as double, y2 as double, x3 as double, y3 as double )
+  CGContextBeginPath( ctx )
+  CGContextMoveToPoint( ctx, x1, y1 )
+  CGContextAddLineToPoint( ctx, x2, y2 )
+  CGContextAddLineToPoint( ctx, x3, y3 )
+  CGContextClosePath( ctx )
+  CGContextFillPath( ctx )
+end fn
+
+void local fn DrawCells( ctx as CGContextRef )
+  dim as long r, c, code
+  dim as double x, y
+  for r = 0 to 24
+    for c = 0 to 39
+      code = gGrid(r, c)
+      if code <> _chSpace
+        x = c * _cell
+        y = r * _cell
+        fn SetFill( ctx, gColr(r, c) )
+        select ( code )
+          case _chSolid
+            CGContextFillRect( ctx, fn CGRectMake( x, y, _cell, _cell ) )
+          case _chGroove
+            CGContextFillRect( ctx, fn CGRectMake( x, y, _cell, _cell ) )
+            fn SetFill( ctx, _clBlack )
+            CGContextFillRect( ctx, fn CGRectMake( x + 3, y, 2, _cell ) )
+          case _chTriBL
+            fn FillTri( ctx, x, y, x + _cell, y + _cell, x, y + _cell )
+          case _chTriBR
+            fn FillTri( ctx, x + _cell, y, x + _cell, y + _cell, x, y + _cell )
+          case _chTriTL
+            fn FillTri( ctx, x, y, x + _cell, y, x, y + _cell )
+          case _chTriTR
+            fn FillTri( ctx, x, y, x + _cell, y, x + _cell, y + _cell )
+          case _chTwinkA
+            CGContextFillRect( ctx, fn CGRectMake( x + 1, y + 1, 2, 2 ) )
+            CGContextFillRect( ctx, fn CGRectMake( x + 5, y + 5, 2, 2 ) )
+          case _chTwinkB
+            CGContextFillRect( ctx, fn CGRectMake( x + 5, y + 1, 2, 2 ) )
+            CGContextFillRect( ctx, fn CGRectMake( x + 1, y + 5, 2, 2 ) )
+          case _chTwinkC
+            CGContextFillRect( ctx, fn CGRectMake( x + 3, y + 3, 2, 2 ) )
+        end select
+      end if
+    next
+  next
+end fn
+
+void local fn DrawSprM( ctx as CGContextRef, frm as long, sx as long, sy as long, ex as long, c1 as long, c2 as long, c3 as long )
+  // multicolor sprite: 12 pairs per row, each pair 2 pixels wide
+  dim as long r, p, code
+  dim as double x, y
+  for r = 0 to 20
+    for p = 0 to 11
+      code = gSpr(frm, r, p)
+      if code
+        select ( code )
+          case 1 : fn SetFill( ctx, c1 )
+          case 2 : fn SetFill( ctx, c2 )
+          case 3 : fn SetFill( ctx, c3 )
+        end select
+        x = sx - _sprXOrg + p * 2 * ex
+        y = sy - _sprYOrg + r * ex
+        CGContextFillRect( ctx, fn CGRectMake( x, y, 2 * ex, ex ) )
+      end if
+    next
+  next
+end fn
+
+void local fn DrawSprCross( ctx as CGContextRef, isBox as long, sx as long, sy as long, ex as long, ci as long )
+  dim as long r, c, b1
+  dim as double x, y
+  fn SetFill( ctx, ci )
+  for r = 0 to 20
+    for c = 0 to 23
+      if isBox
+        b1 = gBox(r, c)
+      else
+        b1 = gCross(r, c)
+      end if
+      if b1
+        x = sx - _sprXOrg + c * ex
+        y = sy - _sprYOrg + r * ex
+        CGContextFillRect( ctx, fn CGRectMake( x, y, ex, ex ) )
+      end if
+    next
+  next
+end fn
+
+local fn GlyphIndex( ch as long ) as long
+  dim as long g
+  g = -1
+  if ch >= 65 && ch <= 90 then g = ch - 65
+  if ch >= 48 && ch <= 57 then g = ch - 22
+  if ch = 46 then g = 36
+  if ch = 44 then g = 37
+  if ch = 39 then g = 38
+  if ch = 58 then g = 39
+  if ch = 45 then g = 40
+  if ch = 33 then g = 41
+  if ch = 63 then g = 42
+  if ch = 47 then g = 43
+end fn = g
+
+void local fn DrawText( ctx as CGContextRef, x as long, y as long, s as CFStringRef, ci as long, sc as long )
+  dim as long i, n, g, r, c, rowBits
+  n = fn StringLength( s )
+  fn SetFill( ctx, ci )
+  for i = 0 to n - 1
+    g = fn GlyphIndex( fn StringCharacterAtIndex( s, i ) )
+    if g >= 0
+      for r = 0 to 6
+        rowBits = gFont(g, r)
+        for c = 0 to 4
+          if rowBits and (16 >> c)
+            CGContextFillRect( ctx, fn CGRectMake( x + i * _cell * sc + c * sc, y + r * sc, sc, sc ) )
+          end if
+        next
+      next
+    end if
+  next
+end fn
+
+void local fn DrawTextC( ctx as CGContextRef, y as long, s as CFStringRef, ci as long, sc as long )
+  fn DrawText( ctx, ( _playW - fn StringLength( s ) * _cell * sc ) / 2, y, s, ci, sc )
+end fn
+
+void local fn DrawScore( ctx as CGContextRef )
+  fn DrawText( ctx, 80, 1, @"SCORE", _clWhite, 1 )
+  fn DrawText( ctx, 192, 1, fn StringWithFormat( @"%ld", gScore ), _clWhite, 1 )
+end fn
+
+void local fn DrawMenu( ctx as CGContextRef )
+  fn DrawTextC( ctx, 20, @"DEVASTATOR", _clLtRed, 3 )
+  fn DrawTextC( ctx, 64, @"SELECT 1 OR 2 PLAYER GAME", _clWhite, 1 )
+  fn DrawTextC( ctx, 88, @"ARROWS AIM THE SIGHT", _clLtGrey, 1 )
+  fn DrawTextC( ctx, 100, @"SPACE FIRES. ONE SHOT PER PRESS", _clLtGrey, 1 )
+  fn DrawTextC( ctx, 112, @"1 2 3 SET SPEED", _clLtGrey, 1 )
+  fn DrawTextC( ctx, 128, @"PLAYER 2: W A S D FLY THE SAUCER", _clLtGrey, 1 )
+  fn DrawTextC( ctx, 140, @"F JAMS THE GUNSIGHT", _clLtGrey, 1 )
+  fn DrawTextC( ctx, 160, @"DESTROY 10 SAUCERS TO SAVE EARTH", _clYellow, 1 )
+  fn DrawTextC( ctx, 172, @"HIT IT EVERY 10 SECONDS OR EARTH DIES", _clYellow, 1 )
+end fn
+
+void local fn DrawGame
+  dim as CGContextRef ctx
+  dim as long ex, bg
+  ctx = fn GraphicsContextCurrentCGContext
+  CGContextSetShouldAntialias( ctx, NO )
+  CGContextTranslateCTM( ctx, 0.0, _viewH )
+  CGContextScaleCTM( ctx, _scale, -_scale )
+  bg = _clBlack
+  if gFlash then bg = _clRed
+  fn SetFill( ctx, bg )
+  CGContextFillRect( ctx, fn CGRectMake( 0, 0, _playW, _playH ) )
+  if gState = _stMenu
+    fn DrawMenu( ctx )
+    exit fn
+  end if
+  fn DrawCells( ctx )
+  fn DrawSprM( ctx, gEarthFrame, _earthX, _earthY, 2, _clCyan, _clCyan, _clLtGrn )
+  ex = 2
+  if gSightSmall then ex = 1
+  fn DrawSprCross( ctx, YES, gSightX, gSightY, ex, _clYellow )
+  if gExplode
+    fn DrawSprM( ctx, _frEarth3, gSaucX, gSaucY, 1, _clCyan, _clLtRed, _clLtGrn )
+  else
+    fn DrawSprM( ctx, _frSaucer, gSaucX, gSaucY, 1, _clCyan, _clLtRed, _clLtGrn )
+  end if
+  fn DrawSprCross( ctx, NO, gSightX, gSightY, ex, _clYellow )
+  fn DrawScore( ctx )
+  select ( gState )
+    case _stWon
+      fn DrawTextC( ctx, 16, @"YOU SAVED THE EARTH", _clWhite, 1 )
+      fn DrawTextC( ctx, 36, @"RETURN TO REPLAY", _clLtGrey, 1 )
+      fn DrawTextC( ctx, 48, @"Q TO QUIT", _clLtGrey, 1 )
+    case _stLost
+      fn DrawTextC( ctx, 8, @"THE EARTH HAS BEEN", _clLtRed, 1 )
+      fn DrawTextC( ctx, 20, @"DESTROYED.", _clLtRed, 1 )
+      fn DrawTextC( ctx, 36, @"RETURN TO REPLAY", _clLtGrey, 1 )
+      fn DrawTextC( ctx, 48, @"Q TO QUIT", _clLtGrey, 1 )
+  end select
+end fn

@@ -1,0 +1,113 @@
+/*
+Devastator
+A keyboard port of the Commodore 64 game from Byte magazine.
+Original playfield, sprites, and rules reconstructed from devastator.bas
+and the machine language at $C000-$C6CB.
+
+You aim a gunsight and fire at the Devastator saucer. A hit scores 10
+points and resets a hidden 10 second clock. If the clock runs out the
+Earth is destroyed. Ten hits destroy a saucer; each destroyed saucer
+makes the next one change direction faster. Destroy ten saucers to win.
+*/
+
+include "CocoaUI/Sound.incl"
+
+// window and view tags
+_window   = 1
+_gameView = 1
+
+// game states
+_stMenu = 0
+_stPlay = 1
+_stWon  = 2
+_stBoom = 3
+_stLost = 4
+
+// playfield: 40x25 cells of 8x8 C64 pixels, drawn at 3x
+_cols   = 40
+_rows   = 25
+_cell   = 8
+_scale  = 3
+_playW  = 320
+_playH  = 200
+_viewW  = 960
+_viewH  = 600
+
+// C64 screen codes kept from the original
+_chSpace   = 32
+_chSolid   = 160
+_chGroove  = 221
+_chTriBL   = 223
+_chTriBR   = 233
+_chTriTL   = 105
+_chTriTR   = 95
+_chTwinkA  = 247
+_chTwinkB  = 192
+_chTwinkC  = 239
+
+// C64 color indexes used
+_clBlack  = 0
+_clWhite  = 1
+_clRed    = 2
+_clCyan   = 3
+_clYellow = 7
+_clLtRed  = 10
+_clGrey   = 12
+_clLtGrn  = 13
+_clLtGrey = 15
+
+// sprite frames in gSpr
+_frSaucer = 0
+_frEarth1 = 1
+_frEarth2 = 2
+_frEarth3 = 3
+
+// sprite register coordinate space from the original
+_sprXMin   = 44
+_sprXMax   = 301
+_sprYMin   = 120
+_sprYMax   = 229
+_sprXOrg   = 24
+_sprYOrg   = 50
+_startPos  = 173
+_earthX    = 160
+_earthY    = 60
+
+// original tuning values
+_wavesToWin   = 12
+_winBelow     = 3
+_hitsPerWave  = 10
+_pointsPerHit = 10
+_doomTicks    = 600
+_fireGate     = 3
+_hitPause     = 20
+_boomTicks    = 150
+_anim4        = 4
+
+// macOS virtual key codes
+_kcA = 0
+_kcS = 1
+_kcD = 2
+_kcF = 3
+_kcQ = 12
+_kcW = 13
+_kc1 = 18
+_kc2 = 19
+_kc3 = 20
+_kcReturn = 36
+_kcSpace  = 49
+_kcEsc    = 53
+_kcEnter  = 76
+_kcLeft   = 123
+_kcRight  = 124
+_kcDown   = 125
+_kcUp     = 126
+
+// menus
+_mApplication = 0
+_iSeparator = 1
+_mFile = 1
+_iClose = 1
+_mGame = 2
+_iNewGame = 1
+_mHelp = 3

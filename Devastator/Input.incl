@@ -1,0 +1,37 @@
+// ---------- input ----------
+
+void local fn KeyChange( down as long )
+  dim as long kc
+  kc = fn EventKeyCode
+  select ( kc )
+    case _kcLeft  : gKLeft = down
+    case _kcRight : gKRight = down
+    case _kcUp    : gKUp = down
+    case _kcDown  : gKDown = down
+    case _kcA : gKA = down
+    case _kcD : gKD = down
+    case _kcW : gKW = down
+    case _kcS : gKS = down
+    case _kcSpace : gFireHeld = down
+    case _kcF : gJamHeld = down
+  end select
+  if down
+    select ( gState )
+      case _stMenu
+        if kc = _kc1 then fn StartGame( 1 )
+        if kc = _kc2 then fn StartGame( 2 )
+      case _stPlay
+        if kc = _kc1 then gSpeed = 2
+        if kc = _kc2 then gSpeed = 3
+        if kc = _kc3 then gSpeed = 5
+        if kc = _kcEsc
+          gState = _stMenu
+          sound stop 1
+        end if
+      case _stWon, _stLost
+        if kc = _kcReturn || kc = _kcEnter then fn StartGame( gPlayers )
+        if kc = _kcQ then WindowClose( _window )
+        if kc = _kcEsc then gState = _stMenu
+    end select
+  end if
+end fn

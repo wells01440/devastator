@@ -1,0 +1,4 @@
+*.incl -text
+*.main -text
+*.fbproj -text
+*.plist -text

@@ -1,0 +1,89 @@
+// ---------- backdrop ----------
+
+void local fn BuildBackdrop
+  dim as long r, c, e
+  for r = 0 to 24
+    for c = 0 to 39
+      gGrid(r, c) = _chSpace
+      gColr(r, c) = _clWhite
+    next
+  next
+  // upper walls narrow toward the pinch
+  for r = 0 to 10
+    for c = 0 to r - 1
+      gGrid(r, c) = _chSolid
+    next
+    gGrid(r, r) = _chTriBL
+    gGrid(r, 33 - r) = _chTriBR
+    for c = 34 - r to 39
+      gGrid(r, c) = _chSolid
+    next
+  next
+  // the pinch
+  for r = 11 to 14
+    for c = 0 to 16
+      gGrid(r, c) = _chSolid
+    next
+    for c = 23 to 39
+      gGrid(r, c) = _chSolid
+    next
+  next
+  // lower walls widen, floor twinkles between them
+  for r = 15 to 24
+    e = 16 - (r - 15)
+    for c = 0 to e - 1
+      gGrid(r, c) = _chSolid
+    next
+    gGrid(r, e) = _chTriTL
+    e = 23 + (r - 15)
+    gGrid(r, e) = _chTriTR
+    for c = e + 1 to 39
+      gGrid(r, c) = _chSolid
+    next
+    for c = 16 - (r - 15) + 1 to 23 + (r - 15) - 1
+      gGrid(r, c) = _chTwinkA
+      gColr(r, c) = _clGrey
+      if r > 17 then gColr(r, c) = _clLtGrey
+      if r > 20 then gColr(r, c) = _clWhite
+    next
+  next
+  gStrL1 = 17 : gStrL2 = 9 : gStrR1 = 30 : gStrR2 = 22
+end fn
+
+
+void local fn StripeSweep( cx as long, setOn as long )
+  dim as long r
+  for r = 0 to 24
+    if setOn
+      if gGrid(r, cx) = _chSolid then gGrid(r, cx) = _chGroove
+    else
+      if gGrid(r, cx) = _chGroove then gGrid(r, cx) = _chSolid
+    end if
+  next
+end fn
+
+
+void local fn StepBackdrop
+  dim as long r, c
+  fn StripeSweep( gStrL1, NO )
+  gStrL1 = gStrL1 - 1 : if gStrL1 < 1 then gStrL1 = 16
+  fn StripeSweep( gStrL1, YES )
+  fn StripeSweep( gStrL2, NO )
+  gStrL2 = gStrL2 - 1 : if gStrL2 < 1 then gStrL2 = 16
+  fn StripeSweep( gStrL2, YES )
+  fn StripeSweep( gStrR1, NO )
+  gStrR1 = gStrR1 + 1 : if gStrR1 > 38 then gStrR1 = 23
+  fn StripeSweep( gStrR1, YES )
+  fn StripeSweep( gStrR2, NO )
+  gStrR2 = gStrR2 + 1 : if gStrR2 > 38 then gStrR2 = 23
+  fn StripeSweep( gStrR2, YES )
+  for r = 15 to 24
+    for c = 0 to 39
+      select ( gGrid(r, c) )
+        case _chTwinkA : gGrid(r, c) = _chTwinkB
+        case _chTwinkB : gGrid(r, c) = _chTwinkC
+        case _chTwinkC : gGrid(r, c) = _chTwinkA
+      end select
+    next
+  next
+end fn

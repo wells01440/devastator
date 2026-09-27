@@ -1,0 +1,259 @@
+// sprite, palette, and font data
+
+// C64 palette, r g b per color 0-15
+data 0,0,0
+data 255,255,255
+data 129,51,56
+data 117,206,200
+data 142,60,158
+data 86,172,77
+data 46,44,155
+data 237,241,113
+data 142,80,41
+data 85,56,0
+data 196,108,113
+data 74,74,74
+data 123,123,123
+data 169,255,159
+data 112,109,235
+data 178,178,178
+
+// saucer sprite, multicolor, from the original at 49523
+data 0,0,0
+data 0,0,0
+data 0,0,0
+data 0,0,0
+data 0,0,0
+data 0,0,0
+data 0,0,0
+data 0,0,0
+data 0,0,0
+data 0,20,0
+data 0,85,0
+data 1,85,64
+data 5,125,80
+data 31,255,244
+data 117,85,93
+data 118,150,157
+data 6,150,144
+data 1,85,64
+data 0,0,0
+data 0,0,0
+data 0,0,0
+
+// crosshair sprite, mono, from the original at 49587
+data 0,0,0
+data 0,0,0
+data 0,0,0
+data 0,0,0
+data 0,0,0
+data 0,24,0
+data 0,24,0
+data 0,24,0
+data 0,24,0
+data 3,255,192
+data 3,255,192
+data 0,24,0
+data 0,24,0
+data 0,24,0
+data 0,24,0
+data 0,0,0
+data 0,0,0
+data 0,0,0
+data 0,0,0
+data 0,0,0
+data 0,0,0
+
+// box sprite, mono, from the original at 49651
+data 255,255,255
+data 255,255,255
+data 192,0,3
+data 192,0,3
+data 192,0,3
+data 192,0,3
+data 192,0,3
+data 192,0,3
+data 192,0,3
+data 192,0,3
+data 192,0,3
+data 192,0,3
+data 192,0,3
+data 192,0,3
+data 192,0,3
+data 192,0,3
+data 192,0,3
+data 192,0,3
+data 192,0,3
+data 255,255,255
+data 255,255,255
+
+// earth sprite frame 1, from the original at 50653
+data 0,0,0
+data 2,169,0
+data 2,254,64
+data 11,255,144
+data 43,255,208
+data 42,255,164
+data 170,254,169
+data 170,190,169
+data 170,186,169
+data 186,186,169
+data 170,254,169
+data 170,254,173
+data 43,255,180
+data 42,255,180
+data 42,254,180
+data 10,254,144
+data 2,185,64
+data 0,169,0
+data 0,0,0
+data 0,0,0
+data 0,0,0
+
+// earth sprite frame 2, from the original at 50717
+data 0,0,0
+data 0,136,0
+data 0,254,0
+data 11,207,128
+data 11,255,192
+data 2,207,36
+data 34,254,40
+data 40,188,169
+data 42,50,169
+data 128,0,0
+data 170,14,169
+data 34,62,44
+data 8,252,132
+data 40,207,48
+data 2,254,128
+data 2,206,0
+data 2,185,0
+data 0,0,0
+data 0,0,0
+data 0,0,0
+data 0,0,0
+
+// earth sprite frame 3, from the original at 50781
+data 0,0,0
+data 0,136,0
+data 0,12,0
+data 8,0,128
+data 11,0,192
+data 0,3,4
+data 34,50,0
+data 0,188,160
+data 32,2,8
+data 0,0,0
+data 128,0,136
+data 34,62,44
+data 8,0,132
+data 0,192,48
+data 0,192,128
+data 2,0,0
+data 0,184,0
+data 0,0,0
+data 0,0,0
+data 0,0,0
+data 0,0,0
+
+// 5x7 font: A-Z, 0-9, . , ' : - ! ? /
+data 14,17,17,31,17,17,17
+data 30,17,17,30,17,17,30
+data 14,17,16,16,16,17,14
+data 30,17,17,17,17,17,30
+data 31,16,16,30,16,16,31
+data 31,16,16,30,16,16,16
+data 14,17,16,23,17,17,15
+data 17,17,17,31,17,17,17
+data 14,4,4,4,4,4,14
+data 1,1,1,1,17,17,14
+data 17,18,20,24,20,18,17
+data 16,16,16,16,16,16,31
+data 17,27,21,21,17,17,17
+data 17,25,21,19,17,17,17
+data 14,17,17,17,17,17,14
+data 30,17,17,30,16,16,16
+data 14,17,17,17,21,18,13
+data 30,17,17,30,20,18,17
+data 15,16,16,14,1,1,30
+data 31,4,4,4,4,4,4
+data 17,17,17,17,17,17,14
+data 17,17,17,17,17,10,4
+data 17,17,17,21,21,27,17
+data 17,17,10,4,10,17,17
+data 17,17,10,4,4,4,4
+data 31,1,2,4,8,16,31
+data 14,17,19,21,25,17,14
+data 4,12,4,4,4,4,14
+data 14,17,1,2,4,8,31
+data 31,2,4,2,1,17,14
+data 2,6,10,18,31,2,2
+data 31,16,30,1,1,17,14
+data 6,8,16,30,17,17,14
+data 31,1,2,4,8,8,8
+data 14,17,17,14,17,17,14
+data 14,17,17,15,1,2,12
+data 0,0,0,0,0,12,12
+data 0,0,0,0,12,4,8
+data 12,4,8,0,0,0,0
+data 0,12,12,0,12,12,0
+data 0,0,0,31,0,0,0
+data 4,4,4,4,4,0,4
+data 14,17,1,2,4,0,4
+data 1,1,2,4,8,16,16
+
+
+// ---------- data loading ----------
+
+void local fn InitData
+  dim as long i, f, r, b, c, v, p
+  // palette
+  for i = 0 to 15
+    read v : gPalR(i) = v / 255.0
+    read v : gPalG(i) = v / 255.0
+    read v : gPalB(i) = v / 255.0
+  next
+  // saucer, multicolor pair codes
+  for r = 0 to 20
+    for b = 0 to 2
+      read v
+      for p = 0 to 3
+        gSpr(_frSaucer, r, b * 4 + p) = (v >> (6 - p * 2)) and 3
+      next
+    next
+  next
+  // crosshair and box, mono bits
+  for r = 0 to 20
+    for b = 0 to 2
+      read v
+      for c = 0 to 7
+        gCross(r, b * 8 + c) = (v >> (7 - c)) and 1
+      next
+    next
+  next
+  for r = 0 to 20
+    for b = 0 to 2
+      read v
+      for c = 0 to 7
+        gBox(r, b * 8 + c) = (v >> (7 - c)) and 1
+      next
+    next
+  next
+  // earth frames, multicolor pair codes
+  for f = _frEarth1 to _frEarth3
+    for r = 0 to 20
+      for b = 0 to 2
+        read v
+        for p = 0 to 3
+          gSpr(f, r, b * 4 + p) = (v >> (6 - p * 2)) and 3
+        next
+      next
+    next
+  next
+  // font: A-Z, 0-9, . , ' : - ! ? /
+  for i = 0 to 43
+    for r = 0 to 6
+      read v : gFont(i, r) = v
+    next
+  next
+end fn

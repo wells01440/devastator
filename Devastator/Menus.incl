@@ -1,0 +1,9 @@
+void local fn BuildMenu
+  menu _mApplication, _iSeparator
+  menu _mFile,,, @"File"
+  menu _mFile, _iClose,, @"Close", @"w"
+  MenuItemSetAction( _mFile, _iClose, @"performClose:" )
+  menu _mGame,,, @"Game"
+  menu _mGame, _iNewGame,, @"New Game", @"n"
+  helpmenu _mHelp
+end fn
